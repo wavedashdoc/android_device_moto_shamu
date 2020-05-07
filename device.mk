@@ -173,6 +173,7 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.sensor.barometer.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.barometer.xml \
     frameworks/native/data/etc/android.hardware.sensor.stepcounter.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepcounter.xml \
     frameworks/native/data/etc/android.hardware.sensor.stepdetector.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.sensor.stepdetector.xml \
+    frameworks/native/data/etc/android.hardware.telephony.ims.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.telephony.ims.xml \
     frameworks/native/data/etc/android.hardware.touchscreen.multitouch.jazzhand.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.touchscreen.multitouch.jazzhand.xml \
     frameworks/native/data/etc/android.software.sip.voip.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.sip.voip.xml \
     frameworks/native/data/etc/android.hardware.usb.accessory.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.usb.accessory.xml \
@@ -189,7 +190,7 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/permissions/privapp-permissions_shamu.xml:$(TARGET_COPY_OUT_SYSTEM)/etc/permissions/privapp-permissions_shamu.xml
 
 # Ramdisk
- PRODUCT_PACKAGES += \
+PRODUCT_PACKAGES += \
     fstab.shamu \
     init.shamu.rc \
     init.shamu.power.rc \
@@ -247,6 +248,9 @@ ifeq ($(TARGET_BUILD_VARIANT),user)
 PRODUCT_SYSTEM_VERITY_PARTITION := /dev/block/platform/msm_sdcc.1/by-name/system
 $(call inherit-product, build/target/product/verity.mk)
 endif
+
+# VoLTE
+AUDIO_FEATURE_ENABLED_MULTI_VOICE_SESSIONS := true
 
 # Wi-Fi
 PRODUCT_PACKAGES += \

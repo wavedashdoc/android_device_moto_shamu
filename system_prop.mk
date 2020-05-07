@@ -14,6 +14,7 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.audio.fluence.voicecomm=false \
     persist.audio.fluence.voicerec=false \
     ro.audio.flinger_standbytime_ms=300 \
+    ro.audio.monitorRotation=true \
     ro.config.media_vol_steps=25 \
     ro.config.vc_call_vol_steps=7 \
     ro.qc.sdk.audio.fluencetype=fluence
@@ -46,7 +47,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
     dalvik.vm.heaptargetutilization=0.75 \
     dalvik.vm.heapminfree=2m \
     dalvik.vm.heapmaxfree=8m
-
 
 # Display
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -81,6 +81,13 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
     sys.use_fifo_ui=1
 
+# IMS logging
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.ims.disableADBLogs=2 \
+    persist.ims.disableDebugLogs=1 \
+    persist.ims.disableIMSLogs=1 \
+    persist.ims.disableQXDMLogs=0
+
 # OEM Unlock reporting
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.oem_unlock_supported=1
@@ -103,6 +110,10 @@ PRODUCT_PROPERTY_OVERRIDES += \
     persist.qcril_uim_vcc_feature=1 \
     rild.libpath=/system/vendor/lib/libril-qc-qmi-1.so
 
+# Rich Communications Service is disabled in 5.1
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.rcs.supported=0
+
 # Surfaceflinger
 PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.surface_flinger.force_hwc_copy_for_virtual_displays=true \
@@ -123,3 +134,8 @@ PRODUCT_PROPERTY_OVERRIDES += \
 # Vendor security patch level
 PRODUCT_PROPERTY_OVERRIDES += \
     ro.lineage.build.vendor_security_patch=2017-10-01
+
+# Wi-Fi calling
+PRODUCT_PROPERTY_OVERRIDES += \
+    persist.radio.data_con_rprt=1 \
+    persist.radio.ignore_ims_wlan=1
