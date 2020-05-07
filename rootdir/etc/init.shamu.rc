@@ -166,6 +166,10 @@ on post-fs-data
     mkdir /data/misc/location/mq 0770 gps gps
     mkdir /data/misc/location/xtwifi 0770 gps gps
 
+    #Create directory from IMS services
+    mkdir /data/shared 0755
+    chown system system /data/shared
+
     #Create directory for hostapd
     mkdir /data/hostapd 0770 system wifi
 
@@ -341,6 +345,34 @@ service netmgrd /system/vendor/bin/netmgrd
     group radio
     writepid /dev/cpuset/system-background/tasks
 
+service imsqmidaemon /system/bin/imsqmidaemon
+    class main
+    user system
+    socket ims_qmid stream 0660 system radio
+    group radio log
+    writepid /dev/cpuset/system-background/tasks
+
+service imsdatadaemon /system/bin/imsdatadaemon
+    class main
+    user root
+    socket ims_datad stream 0660 system radio
+    group system wifi radio inet log readproc
+    writepid /dev/cpuset/system-background/tasks
+    disabled
+
+on property:sys.ims.QMI_DAEMON_STATUS=1
+    start imsdatadaemon
+
+service ims_rtp_daemon /system/bin/ims_rtp_daemon
+    class main
+    user root
+    socket ims_rtpd stream 0660 system radio
+    group system radio inet log
+    disabled
+
+on property:sys.ims.DATA_DAEMON_STATUS=1
+   start ims_rtp_daemon
+
 service sensors /system/bin/sensors.qcom
     class core
     user root
@@ -423,6 +455,12 @@ service mpdecision /system/vendor/bin/mpdecision --avg_comp
     group root system readproc diag
     writepid /dev/cpuset/system-background/tasks
 
+service msm_irqbalance /system/vendor/bin/msm_irqbalance -f /system/vendor/etc/irqbalance.conf
+    socket msm_irqbalance seqpacket 660 root system
+    class core
+    user root
+    group root
+
 service thermal-engine /system/vendor/bin/thermal-engine
     class hal
     user root
@@ -469,6 +507,11 @@ on property:ro.mdm_helper_proxy_req=true
 
 on property:init.svc.ril-daemon=running
     setprop ro.mdm_helper_proxy_req true
+
+service atfwd /system/bin/ATFWD-daemon
+    class late_start
+    user system
+    group system radio
 
 service cnd /system/bin/cnd
     class late_start
