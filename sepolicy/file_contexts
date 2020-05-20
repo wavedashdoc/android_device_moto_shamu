@@ -103,6 +103,7 @@
 # System files
 #
 /system/bin/adspd                                     u:object_r:adspd_exec:s0
+/system/bin/ATFWD-daemon                              u:object_r:atfwd_exec:s0
 /system/bin/cnd                                       u:object_r:cnd_exec:s0
 /system/bin/imsdatadaemon                             u:object_r:ims_exec:s0
 /system/bin/imsqmidaemon                              u:object_r:ims_exec:s0
